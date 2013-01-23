@@ -15,6 +15,7 @@ public class InputForm extends LinearLayout {
 	EditText _inputField;
 	Button _inputButton;
 	
+	//Create form
 	public InputForm(Context context, String hint, String buttonText) {
 		super(context);
 		
@@ -38,4 +39,15 @@ public class InputForm extends LinearLayout {
 		lParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		this.setLayoutParams(lParams);
 	}
+	
+	//Capture user input
+	public EditText getField(){
+		return _inputField;
+	}
+	
+	//Capture button
+	public Button getButton(){
+		return _inputButton;
+	}
+	
 }

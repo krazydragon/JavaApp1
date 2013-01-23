@@ -11,13 +11,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 public class MainActivity extends Activity {
 
 	Context _context;
 	LinearLayout _thisLayout;
-	Boolean connected = false;
+	Boolean _connected = false;
+	EditText _inputField;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +33,28 @@ public class MainActivity extends Activity {
 		
 		InputForm input = new InputForm(_context, "test", "test");
 		
-		_thisLayout.addView(input);
+		//Detect form elements
+		_inputField = input.getField();
+		Button inputButton = input.getButton();
+		
+		//Detect button click
+		inputButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Log.i("Click Handler",_inputField.getText().toString());
+			}
+		});
 		
 		
 		//Check network connection
-		connected = WebInterface.getConnectionStatus(_context);
-		if(connected){
+		_connected = WebInterface.getConnectionStatus(_context);
+		if(_connected){
 			Log.i("NETWORK CONNECTION", WebInterface.getConnectionType(_context));
 		}
-				
+		
+		_thisLayout.addView(input);
+		
 		setContentView(_thisLayout);
 		
 	}
