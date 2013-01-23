@@ -4,9 +4,12 @@
 //Full Sail University
 package com.barnes.ronaldo.javaapp1;
 
+import com.rbarnes.lib.WebInterface;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.LinearLayout;
 
@@ -14,6 +17,7 @@ public class MainActivity extends Activity {
 
 	Context _context;
 	LinearLayout _thisLayout;
+	Boolean connected = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,13 @@ public class MainActivity extends Activity {
 		_context = this;
 		_thisLayout = new LinearLayout(this);
 		
+		
+		//Check network connection
+				connected = WebInterface.getConnectionStatus(_context);
+				if(connected){
+					Log.i("NETWORK CONNECTION", WebInterface.getConnectionType(_context));
+				}
+				
 		setContentView(_thisLayout);
 		
 	}
