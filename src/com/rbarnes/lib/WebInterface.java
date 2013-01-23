@@ -1,3 +1,8 @@
+//Ronaldo Barnes
+//Java 1 week 3
+//January 2013
+//Full Sail University
+
 package com.rbarnes.lib;
 
 import android.content.Context;

@@ -26,12 +26,16 @@ public class MainActivity extends Activity {
 		_context = this;
 		_thisLayout = new LinearLayout(this);
 		
+		InputForm input = new InputForm(_context, "test", "test");
+		
+		_thisLayout.addView(input);
+		
 		
 		//Check network connection
-				connected = WebInterface.getConnectionStatus(_context);
-				if(connected){
-					Log.i("NETWORK CONNECTION", WebInterface.getConnectionType(_context));
-				}
+		connected = WebInterface.getConnectionStatus(_context);
+		if(connected){
+			Log.i("NETWORK CONNECTION", WebInterface.getConnectionType(_context));
+		}
 				
 		setContentView(_thisLayout);
 		
