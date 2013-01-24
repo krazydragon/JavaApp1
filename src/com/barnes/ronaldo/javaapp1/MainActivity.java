@@ -20,7 +20,7 @@ import com.rbarnes.lib.WebInterface;
 import com.rbarnes.other.Dessert;
 
 
-import android.R.string;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -48,6 +48,7 @@ public class MainActivity extends Activity {
 	ArrayList<Dessert> _desserts;
 	HashMap<String, String> _oldLocation;
 	EditText _inputField;
+	LocationDisplay _location;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +62,10 @@ public class MainActivity extends Activity {
 		_thisLayout.setOrientation(LinearLayout.VERTICAL);
 		_input = new InputForm(_context, "test", "test");
 		_oldLocation = getOldLocation();
-		TextView tview = new TextView(this);
-	    tview.setText("Introduction");
+		
+		//Display introduction text
+		TextView introView = new TextView(this);
+	    introView.setText("Introduction");
 		
 	    
 		
@@ -91,7 +94,7 @@ public class MainActivity extends Activity {
 		if(_connected){
 			Log.i("NETWORK CONNECTION", WebInterface.getConnectionType(_context));
 		}
-		//Set up _desserts
+		//Set up dessert options
 		_desserts = new ArrayList<Dessert>();
 		_desserts.add(new Dessert("Cookies"));
 		_desserts.add(new Dessert("Cakes"));
@@ -104,10 +107,15 @@ public class MainActivity extends Activity {
 		}
 				
 		_dessertOptions = InputForm.getGroup(this, dessertNames);
-				
-		_thisLayout.addView(tview);
+		
+		//Add Location Display
+		_location = new LocationDisplay(_context);
+		
+		
+		_thisLayout.addView(introView);
 		_thisLayout.addView(_dessertOptions);
 		_thisLayout.addView(_input);
+		_thisLayout.addView(_location);
 		
 		setContentView(_thisLayout);
 		
