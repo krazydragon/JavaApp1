@@ -6,9 +6,13 @@ package com.barnes.ronaldo.javaapp1;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+
+
 
 
 import com.rbarnes.lib.WebInterface;
+import com.rbarnes.other.Dessert;
 
 
 import android.os.AsyncTask;
@@ -22,6 +26,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.LinearLayout.LayoutParams;
 
 public class MainActivity extends Activity {
 
@@ -29,14 +37,21 @@ public class MainActivity extends Activity {
 	LinearLayout _thisLayout;
 	Boolean _connected = false;
 	EditText _inputField;
+	RadioGroup _dessertOptions;
+	ArrayList<Dessert> _desserts;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		
 		_context = this;
 		_thisLayout = new LinearLayout(this);
-		
+		LayoutParams lParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+		_thisLayout.setLayoutParams(lParams); 
+		_thisLayout.setOrientation(LinearLayout.VERTICAL);
+		TextView tview = new TextView(this);
+	    tview.setText("Introduction");
 		InputForm input = new InputForm(_context, "test", "test");
 		
 		//Detect form elements
@@ -48,8 +63,13 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				int selectedButtonId = _dessertOptions.getCheckedRadioButtonId();
+				RadioButton selectedButton = (RadioButton) _dessertOptions.findViewById(selectedButtonId);
+				String buttonText = (String) selectedButton.getText();
+				
+				
 				Log.i("Click Handler",_inputField.getText().toString());
-				getLocations("cookies", "98404");
+				getLocations(buttonText,_inputField.getText().toString());
 			}
 		});
 		
@@ -59,7 +79,22 @@ public class MainActivity extends Activity {
 		if(_connected){
 			Log.i("NETWORK CONNECTION", WebInterface.getConnectionType(_context));
 		}
-		
+		//Set up _desserts
+		_desserts = new ArrayList<Dessert>();
+		_desserts.add(new Dessert("Cookies"));
+		_desserts.add(new Dessert("Cakes"));
+		_desserts.add(new Dessert("Pies"));
+		_desserts.add(new Dessert("Candy"));
+				
+		String[] dessertNames = new String[_desserts.size()];
+		for(int i=0; i<_desserts.size(); i++){
+			dessertNames[i] = _desserts.get(i).getName();
+		}
+				
+		_dessertOptions = InputForm.getGroup(this, dessertNames);
+				
+		_thisLayout.addView(tview);
+		_thisLayout.addView(_dessertOptions);
 		_thisLayout.addView(input);
 		
 		setContentView(_thisLayout);

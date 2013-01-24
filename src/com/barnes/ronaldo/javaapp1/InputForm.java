@@ -6,9 +6,12 @@
 package com.barnes.ronaldo.javaapp1;
 
 import android.content.Context;
+import android.text.InputType;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 public class InputForm extends LinearLayout {
 
@@ -25,6 +28,7 @@ public class InputForm extends LinearLayout {
 		_inputField = new EditText(context);
 		lParams = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1.0f);
 		_inputField.setLayoutParams(lParams);
+		_inputField.setInputType(InputType.TYPE_CLASS_NUMBER);
 		_inputField.setHint(hint);
 		
 		//create button
@@ -49,5 +53,17 @@ public class InputForm extends LinearLayout {
 	public Button getButton(){
 		return _inputButton;
 	}
-	
+	public static RadioGroup getGroup(Context context, String[] group){
+		RadioGroup boxes = new RadioGroup(context);
+		
+		for(int i=0; i<group.length; i++){
+			
+			RadioButton rButton = new RadioButton(context);
+			rButton.setText(group[i]);
+			rButton.setId(i+1);
+			boxes.addView(rButton);
+		}
+		
+		return boxes;
+	}
 }
