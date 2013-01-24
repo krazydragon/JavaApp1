@@ -53,9 +53,10 @@ public class WebInterface {
 			int bytesRead = 0;
 			StringBuffer responseBuffer = new StringBuffer();
 			
-			while(bytesRead - bin.read(contentBytes) != -1){
+			while((bytesRead = bin.read(contentBytes)) != -1){
 				
 				response = new String(contentBytes,0,bytesRead);
+				
 				responseBuffer.append(response);
 				
 			}

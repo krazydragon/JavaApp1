@@ -6,11 +6,11 @@ package com.barnes.ronaldo.javaapp1;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
+
 
 import com.rbarnes.lib.WebInterface;
 
-import android.R.string;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -74,12 +74,13 @@ public class MainActivity extends Activity {
 	}
 	
 	private void getLocations(String dessert, String zipCode){
-		String baseUrl = "http://local.yahooapis.com/LocalSearchService/V3/localSearch?appid=qJIjRlbV34GJZfg2AwqSWVV03eeg8SpTQKy5PZqSfjlRrItt5hS2n3PIysdPU_CCIQlCGXIGjoTDESp3l42Ueic3O1EaYXU-&query="+dessert+"&zip="+zipCode+"&results=10";
+		String baseUrl = "http://local.yahooapis.com/LocalSearchService/V3/localSearch?appid=qJIjRlbV34GJZfg2AwqSWVV03eeg8SpTQKy5PZqSfjlRrItt5hS2n3PIysdPU_CCIQlCGXIGjoTDESp3l42Ueic3O1EaYXU-&query="+dessert+"&zip="+zipCode+"&results=1&output=json";
 		URL finalURL;
 		try{
 			finalURL = new URL(baseUrl);
 			LocationRequest lr = new LocationRequest();
 			lr.execute(finalURL);
+			
 		}catch(MalformedURLException e){
 			Log.e("BAD URL","MALFORMED URL");
 			finalURL = null;
@@ -92,7 +93,7 @@ public class MainActivity extends Activity {
 			String response = "";
 			
 			for(URL url: urls){
-				Log.i("URL RESPONSE", "bye");
+				
 				response = WebInterface.getUrlStringResponse(url);
 			}
 			return response;
@@ -100,7 +101,7 @@ public class MainActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(String result){
-			Log.i("URL RESPONSE", "hi");
+			Log.i("URL RESPONSE", result);
 		}
 	}
 
