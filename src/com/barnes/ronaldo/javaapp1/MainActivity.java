@@ -20,6 +20,7 @@ import com.rbarnes.lib.WebInterface;
 import com.rbarnes.other.Dessert;
 
 
+import android.R.string;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -59,10 +60,11 @@ public class MainActivity extends Activity {
 		_thisLayout.setLayoutParams(lParams); 
 		_thisLayout.setOrientation(LinearLayout.VERTICAL);
 		_input = new InputForm(_context, "test", "test");
-		_oldLocation = new HashMap<String, String>();
+		_oldLocation = getOldLocation();
 		TextView tview = new TextView(this);
 	    tview.setText("Introduction");
 		
+	    
 		
 		//Detect form elements
 	    _inputField = _input.getField();
@@ -130,6 +132,21 @@ public class MainActivity extends Activity {
 			Log.e("BAD URL","MALFORMED URL");
 			finalURL = null;
 		}
+	}
+	
+	//Look for saved HashMap
+	@SuppressWarnings("unchecked")
+	private HashMap<String, String> getOldLocation(){
+		Object stored = FileInterface.readObjectFile(_context, "oldLocation", false);
+		
+		HashMap<String, String> oldLocation;
+		if(stored == null){
+			Log.i("OLD LOCATION", "NO OLD LOCATION FILE FOUND");
+			oldLocation = new HashMap<String, String>();
+		}else{
+			oldLocation = (HashMap<String, String>) stored;
+		}
+		return oldLocation;
 	}
 	
 	private class LocationRequest extends AsyncTask<URL, Void, String>{
