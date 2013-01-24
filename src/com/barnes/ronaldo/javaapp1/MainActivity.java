@@ -7,6 +7,7 @@ package com.barnes.ronaldo.javaapp1;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,6 +15,7 @@ import org.json.JSONObject;
 
 
 
+import com.rbarnes.lib.FileInterface;
 import com.rbarnes.lib.WebInterface;
 import com.rbarnes.other.Dessert;
 
@@ -40,9 +42,11 @@ public class MainActivity extends Activity {
 	Context _context;
 	LinearLayout _thisLayout;
 	Boolean _connected = false;
-	EditText _inputField;
+	InputForm _input;
 	RadioGroup _dessertOptions;
 	ArrayList<Dessert> _desserts;
+	HashMap<String, String> _oldLocation;
+	EditText _inputField;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +58,15 @@ public class MainActivity extends Activity {
 		LayoutParams lParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
 		_thisLayout.setLayoutParams(lParams); 
 		_thisLayout.setOrientation(LinearLayout.VERTICAL);
+		_input = new InputForm(_context, "test", "test");
+		_oldLocation = new HashMap<String, String>();
 		TextView tview = new TextView(this);
 	    tview.setText("Introduction");
-		InputForm input = new InputForm(_context, "test", "test");
+		
 		
 		//Detect form elements
-		_inputField = input.getField();
-		Button inputButton = input.getButton();
+	    _inputField = _input.getField();
+		Button inputButton = _input.getButton();
 		
 		//Detect button click
 		inputButton.setOnClickListener(new OnClickListener() {
@@ -99,7 +105,7 @@ public class MainActivity extends Activity {
 				
 		_thisLayout.addView(tview);
 		_thisLayout.addView(_dessertOptions);
-		_thisLayout.addView(input);
+		_thisLayout.addView(_input);
 		
 		setContentView(_thisLayout);
 		
@@ -152,6 +158,8 @@ public class MainActivity extends Activity {
 					if(location != null){
 						Toast toast = Toast.makeText(_context,location.getString("City"), Toast.LENGTH_SHORT);
 						toast.show();
+						_oldLocation.put(location.getString("Title"), location.toString());
+						FileInterface.storeObjectFile(_context, "oldLocation", _oldLocation, false);
 					}else{
 						Toast toast = Toast.makeText(_context,"Invald Zip Code" , Toast.LENGTH_SHORT);
 						toast.show();
