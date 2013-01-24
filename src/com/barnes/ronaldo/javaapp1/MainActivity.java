@@ -8,6 +8,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 
 
@@ -30,6 +33,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -137,6 +141,27 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPostExecute(String result){
 			Log.i("URL RESPONSE", result);
+			try{
+				JSONObject json = new JSONObject(result);
+				JSONObject locations = json.getJSONObject("ResultSet");
+				if(locations.getString("totalResultsAvailable").compareTo("0")==0){
+					Toast toast = Toast.makeText(_context, "No Results" , Toast.LENGTH_SHORT);
+					toast.show();
+				}else{
+					JSONObject location = locations.getJSONObject("Result");
+					if(location != null){
+						Toast toast = Toast.makeText(_context,location.getString("City"), Toast.LENGTH_SHORT);
+						toast.show();
+					}else{
+						Toast toast = Toast.makeText(_context,"Invald Zip Code" , Toast.LENGTH_SHORT);
+						toast.show();
+					}
+				}
+				
+			}catch(JSONException e){
+				Log.e("JSON", "JSON OBJECT EXCEPTION");
+			}
+			
 		}
 	}
 
