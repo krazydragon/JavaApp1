@@ -5,9 +5,15 @@
 
 package com.rbarnes.lib;
 
+
+import java.io.BufferedInputStream;
+import java.net.URL;
+import java.net.URLConnection;
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 public class WebInterface {
 	static Boolean _connected = false;
@@ -36,4 +42,29 @@ public class WebInterface {
 			}
 		}
 	}
+	public static String getUrlStringResponse(URL url){
+		String response = "";
+		
+		try{
+			URLConnection connection = url.openConnection();
+			BufferedInputStream bin = new BufferedInputStream(connection.getInputStream());
+			
+			byte[] contentBytes = new byte[1024];
+			int bytesRead = 0;
+			StringBuffer responseBuffer = new StringBuffer();
+			
+			while(bytesRead - bin.read(contentBytes) != -1){
+				
+				response = new String(contentBytes,0,bytesRead);
+				responseBuffer.append(response);
+				
+			}
+			return responseBuffer.toString();
+		}catch (Exception e){
+			Log.e("URL RESPONSE ERROR","getURLStringResponse");
+		}
+		
+		return response;
+	}
 }
+
