@@ -62,6 +62,8 @@ public class MainActivity extends Activity {
 		_thisLayout.setOrientation(LinearLayout.VERTICAL);
 		_input = new InputForm(_context, "test", "test");
 		_oldLocation = getOldLocation();
+		//Add Location Display
+		_location = new LocationDisplay(_context);
 		
 		//Display introduction text
 		TextView introView = new TextView(this);
@@ -81,10 +83,12 @@ public class MainActivity extends Activity {
 				int selectedButtonId = _dessertOptions.getCheckedRadioButtonId();
 				RadioButton selectedButton = (RadioButton) _dessertOptions.findViewById(selectedButtonId);
 				String buttonText = (String) selectedButton.getText();
-				
+				Log.i("OLDINFO",_oldLocation.toString());
 				
 				Log.i("Click Handler",_inputField.getText().toString());
 				getLocations(buttonText,_inputField.getText().toString());
+				
+				//_location.setDessertInfo(_oldLocation.get("Location Details"));
 			}
 		});
 		
@@ -108,8 +112,7 @@ public class MainActivity extends Activity {
 				
 		_dessertOptions = InputForm.getGroup(this, dessertNames);
 		
-		//Add Location Display
-		_location = new LocationDisplay(_context);
+		
 		
 		
 		_thisLayout.addView(introView);
@@ -183,7 +186,7 @@ public class MainActivity extends Activity {
 					if(location != null){
 						Toast toast = Toast.makeText(_context,location.getString("City"), Toast.LENGTH_SHORT);
 						toast.show();
-						_oldLocation.put(location.getString("Title"), location.toString());
+						_oldLocation.put("Location Details", location.toString());
 						FileInterface.storeObjectFile(_context, "oldLocation", _oldLocation, false);
 					}else{
 						Toast toast = Toast.makeText(_context,"Invald Zip Code" , Toast.LENGTH_SHORT);

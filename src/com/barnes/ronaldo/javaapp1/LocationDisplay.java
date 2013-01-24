@@ -1,5 +1,11 @@
 package com.barnes.ronaldo.javaapp1;
 
+import java.util.HashMap;
+
+import org.json.JSONObject;
+
+
+
 import android.content.Context;
 import android.widget.GridLayout;
 import android.widget.TextView;
@@ -51,6 +57,17 @@ public class LocationDisplay extends GridLayout{
 		this.addView(phoneNumberLabel);
 		this.addView(_phoneNumber);
 		
+		
+		
+	}
+	public void setDessertInfo(JSONObject location){
+		/*_title.setText(location.getString("Title"));
+		_address.setText(location.getString("Address"));
+		_city.setText(location.getString("City"));
+		_state.setText(location.getString("State"));
+		_phoneNumber.setText(location.getString("Phone"));
+		*/
+		return;
 	}
 	
 }
