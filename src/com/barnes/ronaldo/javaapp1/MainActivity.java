@@ -62,8 +62,9 @@ public class MainActivity extends Activity {
 		_thisLayout.setOrientation(LinearLayout.VERTICAL);
 		_input = new InputForm(_context, "test", "test");
 		_oldLocation = getOldLocation();
-		//Add Location Display
-		_location = new LocationDisplay(_context);
+		//read saved file **PLEASE REMOVE "//" ON NEXT LINE AFTER APP HAS RUN AND SERACH HAS BEEN PREFORMED TO SEE SAVE DATA**
+		//Log.i("Old File", getOldLocation().toString());
+		
 		
 		//Display introduction text
 		TextView introView = new TextView(this);
@@ -83,12 +84,9 @@ public class MainActivity extends Activity {
 				int selectedButtonId = _dessertOptions.getCheckedRadioButtonId();
 				RadioButton selectedButton = (RadioButton) _dessertOptions.findViewById(selectedButtonId);
 				String buttonText = (String) selectedButton.getText();
-				Log.i("OLDINFO",_oldLocation.toString());
-				
 				Log.i("Click Handler",_inputField.getText().toString());
 				getLocations(buttonText,_inputField.getText().toString());
 				
-				//_location.setDessertInfo(_oldLocation.get("Location Details"));
 			}
 		});
 		
@@ -118,7 +116,7 @@ public class MainActivity extends Activity {
 		_thisLayout.addView(introView);
 		_thisLayout.addView(_dessertOptions);
 		_thisLayout.addView(_input);
-		_thisLayout.addView(_location);
+		
 		
 		setContentView(_thisLayout);
 		
@@ -187,7 +185,12 @@ public class MainActivity extends Activity {
 						Toast toast = Toast.makeText(_context,location.getString("City"), Toast.LENGTH_SHORT);
 						toast.show();
 						_oldLocation.put("Location Details", location.toString());
+						//Save File
 						FileInterface.storeObjectFile(_context, "oldLocation", _oldLocation, false);
+						//Show data
+						//Add Location Display
+						_location = new LocationDisplay(_context, location);
+						_thisLayout.addView(_location);
 					}else{
 						Toast toast = Toast.makeText(_context,"Invald Zip Code" , Toast.LENGTH_SHORT);
 						toast.show();

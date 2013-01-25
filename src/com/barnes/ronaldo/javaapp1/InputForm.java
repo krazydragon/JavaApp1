@@ -5,6 +5,7 @@
 
 package com.barnes.ronaldo.javaapp1;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.InputType;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+@SuppressLint("ViewConstructor")
 public class InputForm extends LinearLayout {
 
 	EditText _inputField;
@@ -63,7 +65,7 @@ public class InputForm extends LinearLayout {
 			rButton.setId(i+1);
 			boxes.addView(rButton);
 		}
-		
+		boxes.check(1);
 		return boxes;
 	}
 }
