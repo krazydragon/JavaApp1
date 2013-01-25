@@ -49,6 +49,7 @@ public class MainActivity extends Activity {
 	HashMap<String, String> _oldLocation;
 	EditText _inputField;
 	LocationDisplay _location;
+	Toast _toast;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +61,24 @@ public class MainActivity extends Activity {
 		LayoutParams lParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
 		_thisLayout.setLayoutParams(lParams); 
 		_thisLayout.setOrientation(LinearLayout.VERTICAL);
-		_input = new InputForm(_context, "test", "test");
+		_input = new InputForm(_context, "Please enter zipcode", "Submit");
 		_oldLocation = getOldLocation();
+		if(_oldLocation != null){
+			_toast = Toast.makeText(_context, "Local file found please check log", Toast.LENGTH_LONG);
+			_toast.show();
+			Log.i("Old File", getOldLocation().toString());
+		}else{
+			_oldLocation = new HashMap<String, String>();
+			_toast = Toast.makeText(_context, "No local files found" , Toast.LENGTH_LONG);
+			_toast.show();
+		}
 		//read saved file **PLEASE REMOVE "//" ON NEXT LINE AFTER APP HAS RUN AND SERACH HAS BEEN PREFORMED TO SEE SAVE DATA**
-		//Log.i("Old File", getOldLocation().toString());
+		
 		
 		
 		//Display introduction text
 		TextView introView = new TextView(this);
-	    introView.setText("Introduction");
+	    introView.setText("Find the closest dessert to you");
 		
 	    
 		
@@ -128,7 +138,7 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
-	
+	//Submit search
 	private void getLocations(String dessert, String zipCode){
 		String baseUrl = "http://local.yahooapis.com/LocalSearchService/V3/localSearch?appid=qJIjRlbV34GJZfg2AwqSWVV03eeg8SpTQKy5PZqSfjlRrItt5hS2n3PIysdPU_CCIQlCGXIGjoTDESp3l42Ueic3O1EaYXU-&query="+dessert+"&zip="+zipCode+"&results=1&output=json";
 		URL finalURL;
@@ -151,13 +161,13 @@ public class MainActivity extends Activity {
 		HashMap<String, String> oldLocation;
 		if(stored == null){
 			Log.i("OLD LOCATION", "NO OLD LOCATION FILE FOUND");
-			oldLocation = new HashMap<String, String>();
+			oldLocation = null;
 		}else{
 			oldLocation = (HashMap<String, String>) stored;
 		}
 		return oldLocation;
 	}
-	
+	//get results
 	private class LocationRequest extends AsyncTask<URL, Void, String>{
 		@Override
 		protected String doInBackground(URL... urls){
@@ -177,13 +187,13 @@ public class MainActivity extends Activity {
 				JSONObject json = new JSONObject(result);
 				JSONObject locations = json.getJSONObject("ResultSet");
 				if(locations.getString("totalResultsAvailable").compareTo("0")==0){
-					Toast toast = Toast.makeText(_context, "No Results" , Toast.LENGTH_SHORT);
-					toast.show();
+					_toast = Toast.makeText(_context, "No Results" , Toast.LENGTH_SHORT);
+					_toast.show();
 				}else{
 					JSONObject location = locations.getJSONObject("Result");
 					if(location != null){
-						Toast toast = Toast.makeText(_context,location.getString("City"), Toast.LENGTH_SHORT);
-						toast.show();
+						_toast = Toast.makeText(_context, "Saving File.", Toast.LENGTH_SHORT);
+						_toast.show();
 						_oldLocation.put("Location Details", location.toString());
 						//Save File
 						FileInterface.storeObjectFile(_context, "oldLocation", _oldLocation, false);
@@ -192,8 +202,8 @@ public class MainActivity extends Activity {
 						_location = new LocationDisplay(_context, location);
 						_thisLayout.addView(_location);
 					}else{
-						Toast toast = Toast.makeText(_context,"Invald Zip Code" , Toast.LENGTH_SHORT);
-						toast.show();
+						_toast = Toast.makeText(_context, "Something went wrong" , Toast.LENGTH_SHORT);
+						_toast.show();
 					}
 				}
 				
