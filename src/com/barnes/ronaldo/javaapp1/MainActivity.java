@@ -23,6 +23,7 @@ import com.rbarnes.other.Dessert;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
@@ -38,6 +39,7 @@ import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.Toast;
 
+@SuppressLint("ShowToast")
 public class MainActivity extends Activity {
 
 	Context _context;
@@ -50,6 +52,12 @@ public class MainActivity extends Activity {
 	EditText _inputField;
 	LocationDisplay _location;
 	Toast _toast;
+	JSONObject _tempLocation;
+	String _titleStr;
+	String _addressStr;
+	String _cityStr;
+	String _stateStr;
+	String _phoneStr;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,18 +72,21 @@ public class MainActivity extends Activity {
 		_input = new InputForm(_context, "Please enter zipcode", "Submit");
 		_oldLocation = getOldLocation();
 		if(_oldLocation != null){
-			_toast = Toast.makeText(_context, "Local file found please check log", Toast.LENGTH_LONG);
-			_toast.show();
-			Log.i("Old File", getOldLocation().toString());
+			_toast = Toast.makeText(_context, "No network conntection last search is loaded.", Toast.LENGTH_LONG);
+			_titleStr = _oldLocation.get("Title").toString();
+			_addressStr = _oldLocation.get("Address").toString();
+			_cityStr = _oldLocation.get("City").toString();
+			_stateStr = _oldLocation.get("State").toString();
+			_phoneStr = _oldLocation.get("Phone").toString();
 		}else{
 			_oldLocation = new HashMap<String, String>();
-			_toast = Toast.makeText(_context, "No local files found" , Toast.LENGTH_LONG);
-			_toast.show();
+			_toast = Toast.makeText(_context, "No network or files found" , Toast.LENGTH_LONG);
+			_titleStr = "";
+			_addressStr = "";
+			_cityStr = "";
+			_stateStr = "";
+			_phoneStr = "";
 		}
-		//read saved file **PLEASE REMOVE "//" ON NEXT LINE AFTER APP HAS RUN AND SERACH HAS BEEN PREFORMED TO SEE SAVE DATA**
-		
-		
-		
 		//Display introduction text
 		TextView introView = new TextView(this);
 	    introView.setText("Find the closest dessert to you");
@@ -91,21 +102,31 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				int selectedButtonId = _dessertOptions.getCheckedRadioButtonId();
-				RadioButton selectedButton = (RadioButton) _dessertOptions.findViewById(selectedButtonId);
-				String buttonText = (String) selectedButton.getText();
-				Log.i("Click Handler",_inputField.getText().toString());
-				getLocations(buttonText,_inputField.getText().toString());
+				
+				//Check network connection
+				_connected = WebInterface.getConnectionStatus(_context);
+				if(_connected){
+					Log.i("NETWORK CONNECTION", WebInterface.getConnectionType(_context));
+					int selectedButtonId = _dessertOptions.getCheckedRadioButtonId();
+					RadioButton selectedButton = (RadioButton) _dessertOptions.findViewById(selectedButtonId);
+					String buttonText = (String) selectedButton.getText();
+					
+					getLocations(buttonText,_inputField.getText().toString());
+				}else{
+					//Show data
+					//Add Location Display
+					_location = new LocationDisplay(_context, _titleStr, _addressStr, _cityStr, _stateStr, _phoneStr);
+					_thisLayout.addView(_location);
+					_toast.show();
+				}
+				
+				
+				
+				
 				
 			}
 		});
 		
-		
-		//Check network connection
-		_connected = WebInterface.getConnectionStatus(_context);
-		if(_connected){
-			Log.i("NETWORK CONNECTION", WebInterface.getConnectionType(_context));
-		}
 		//Set up dessert options
 		_desserts = new ArrayList<Dessert>();
 		_desserts.add(new Dessert("Cookies"));
@@ -194,12 +215,21 @@ public class MainActivity extends Activity {
 					if(location != null){
 						_toast = Toast.makeText(_context, "Saving File.", Toast.LENGTH_SHORT);
 						_toast.show();
-						_oldLocation.put("Location Details", location.toString());
+						_oldLocation.put("Title", location.getString("Title"));
+						_oldLocation.put("Address", location.getString("Address"));
+						_oldLocation.put("City", location.getString("City"));
+						_oldLocation.put("State", location.getString("State"));
+						_oldLocation.put("Phone", location.getString("Phone"));
+						
+						
+						
+						
+						
 						//Save File
 						FileInterface.storeObjectFile(_context, "oldLocation", _oldLocation, false);
 						//Show data
 						//Add Location Display
-						_location = new LocationDisplay(_context, location);
+						_location = new LocationDisplay(_context, location.getString("Title"), location.getString("Address"), location.getString("City"), location.getString("State"), location.getString("Phone"));
 						_thisLayout.addView(_location);
 					}else{
 						_toast = Toast.makeText(_context, "Something went wrong" , Toast.LENGTH_SHORT);

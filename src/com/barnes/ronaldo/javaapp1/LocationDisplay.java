@@ -5,8 +5,8 @@ package com.barnes.ronaldo.javaapp1;
 
 
 
-import org.json.JSONException;
-import org.json.JSONObject;
+
+
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -25,32 +25,17 @@ public class LocationDisplay extends GridLayout{
 	
 	
 	
-	public LocationDisplay(Context context, JSONObject location) throws JSONException{
+	
+	public LocationDisplay(Context context, String title, String address, String city, String state, String phone){
 		super(context);
 		
 		_context = context;
-		String title;
-		String address;
-		String city;
-		String state;
-		String phone;
+		
+		
 		//number of columns
 		this.setColumnCount(2);
-		 if (location != null) {
-			title = location.getString("Title");
-			address = location.getString("Address");
-			city = location.getString("City");
-			state = location.getString("State");
-			phone = location.getString("Phone");
-	        } 
-	        else 
-	        {
-	        	title = "";
-				address = "";
-				city = "";
-				state = "";
-				phone = "";
-	        }
+		 
+	       
 		
 		
 		//Setup text views
@@ -89,5 +74,7 @@ public class LocationDisplay extends GridLayout{
 		
 		
 	}
+	
+	
 	
 }
