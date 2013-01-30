@@ -39,7 +39,10 @@ public class WebInterface {
 				_connectionType = nInfo.getTypeName();
 				_connected = true;
 				
+			}else{
+				_connected = false;
 			}
+			
 		}
 	}
 	public static String getUrlStringResponse(URL url){
