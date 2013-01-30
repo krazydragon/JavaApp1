@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 
 
+
 import com.rbarnes.lib.FileInterface;
 import com.rbarnes.lib.WebInterface;
 import com.rbarnes.other.Dessert;
@@ -63,7 +64,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		
+		setContentView(R.layout.activity_main);
 		_context = this;
 		_thisLayout = new LinearLayout(this);
 		LayoutParams lParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
@@ -71,6 +72,7 @@ public class MainActivity extends Activity {
 		_thisLayout.setOrientation(LinearLayout.VERTICAL);
 		_input = new InputForm(_context, "Please enter zipcode", "Submit");
 		_oldLocation = getOldLocation();
+		//Look for old file
 		if(_oldLocation != null){
 			_toast = Toast.makeText(_context, "No network conntection last search is loaded.", Toast.LENGTH_LONG);
 			_titleStr = _oldLocation.get("Title").toString();
@@ -88,7 +90,7 @@ public class MainActivity extends Activity {
 			_phoneStr = "";
 		}
 		//Display introduction text
-		TextView introView = new TextView(this);
+		TextView introView = (TextView) findViewById(R.id.IntroView);
 	    introView.setText("Find the closest dessert to you");
 		
 	    
@@ -144,12 +146,12 @@ public class MainActivity extends Activity {
 		
 		
 		
-		_thisLayout.addView(introView);
+		
 		_thisLayout.addView(_dessertOptions);
 		_thisLayout.addView(_input);
 		
 		
-		setContentView(_thisLayout);
+		
 		
 	}
 
