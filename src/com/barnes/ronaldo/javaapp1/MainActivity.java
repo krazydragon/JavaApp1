@@ -36,8 +36,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
+import android.widget.Spinner;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("ShowToast")
@@ -47,7 +48,6 @@ public class MainActivity extends Activity {
 	LinearLayout _thisLayout;
 	Boolean _connected = false;
 	InputForm _input;
-	RadioGroup _dessertOptions;
 	ArrayList<Dessert> _desserts;
 	HashMap<String, String> _oldLocation;
 	EditText _inputField;
@@ -80,6 +80,7 @@ public class MainActivity extends Activity {
 			_cityStr = _oldLocation.get("City").toString();
 			_stateStr = _oldLocation.get("State").toString();
 			_phoneStr = _oldLocation.get("Phone").toString();
+			_toast.show();
 		}else{
 			_oldLocation = new HashMap<String, String>();
 			_toast = Toast.makeText(_context, "No network or files found" , Toast.LENGTH_LONG);
@@ -88,16 +89,15 @@ public class MainActivity extends Activity {
 			_cityStr = "";
 			_stateStr = "";
 			_phoneStr = "";
+			_toast.show();
 		}
-		//Display introduction text
-		TextView introView = (TextView) findViewById(R.id.IntroView);
-	    introView.setText("Find the closest dessert to you");
+		
 		
 	    
 		
 		//Detect form elements
 	    _inputField = _input.getField();
-		Button inputButton = _input.getButton();
+		Button inputButton = (Button)findViewById(R.id.inputButton);
 		
 		//Detect button click
 		inputButton.setOnClickListener(new OnClickListener() {
@@ -107,13 +107,16 @@ public class MainActivity extends Activity {
 				
 				//Check network connection
 				_connected = WebInterface.getConnectionStatus(_context);
+				RadioGroup inputGroup = (RadioGroup)findViewById(R.id.inputRadioGroup);
 				if(_connected){
 					Log.i("NETWORK CONNECTION", WebInterface.getConnectionType(_context));
-					int selectedButtonId = _dessertOptions.getCheckedRadioButtonId();
-					RadioButton selectedButton = (RadioButton) _dessertOptions.findViewById(selectedButtonId);
+					int selectedButtonId = inputGroup.getCheckedRadioButtonId();
+					RadioButton selectedButton = (RadioButton) findViewById(selectedButtonId);
+					Spinner inputSpinner = (Spinner) findViewById(R.id.inputSpinner);
 					String buttonText = (String) selectedButton.getText();
+					String spinnerText = String.valueOf(inputSpinner.getSelectedItem());
 					
-					getLocations(buttonText,_inputField.getText().toString());
+					getLocations(buttonText,spinnerText);
 				}else{
 					//Show data
 					//Add Location Display
@@ -128,31 +131,6 @@ public class MainActivity extends Activity {
 				
 			}
 		});
-		
-		//Set up dessert options
-		_desserts = new ArrayList<Dessert>();
-		_desserts.add(new Dessert("Cookies"));
-		_desserts.add(new Dessert("Cakes"));
-		_desserts.add(new Dessert("Pies"));
-		_desserts.add(new Dessert("Candy"));
-				
-		String[] dessertNames = new String[_desserts.size()];
-		for(int i=0; i<_desserts.size(); i++){
-			dessertNames[i] = _desserts.get(i).getName();
-		}
-				
-		_dessertOptions = InputForm.getGroup(this, dessertNames);
-		
-		
-		
-		
-		
-		_thisLayout.addView(_dessertOptions);
-		_thisLayout.addView(_input);
-		
-		
-		
-		
 	}
 
 	@Override
@@ -160,6 +138,15 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
+	}
+	//Display results
+	private void displayResults(String title, String address, String city, String state, String phone){
+		
+		
+		TextView tempTitle = (TextView)findViewById(R.id.titleValue);
+		tempTitle.setText(_titleStr);
+		
+		
 	}
 	//Submit search
 	private void getLocations(String dessert, String zipCode){
@@ -217,22 +204,22 @@ public class MainActivity extends Activity {
 					if(location != null){
 						_toast = Toast.makeText(_context, "Saving File.", Toast.LENGTH_SHORT);
 						_toast.show();
-						_oldLocation.put("Title", location.getString("Title"));
-						_oldLocation.put("Address", location.getString("Address"));
-						_oldLocation.put("City", location.getString("City"));
-						_oldLocation.put("State", location.getString("State"));
-						_oldLocation.put("Phone", location.getString("Phone"));
-						
-						
-						
-						
-						
+						_titleStr = location.getString("Title");
+						_addressStr = location.getString("Address");
+						_cityStr = location.getString("City");
+						_stateStr = location.getString("State");
+						_phoneStr = location.getString("Phone");
+						_oldLocation.put("Title",  _titleStr);
+						_oldLocation.put("Address", _addressStr);
+						_oldLocation.put("City", _cityStr);
+						_oldLocation.put("State", _stateStr);
+						_oldLocation.put("Phone", _phoneStr );
 						//Save File
 						FileInterface.storeObjectFile(_context, "oldLocation", _oldLocation, false);
 						//Show data
 						//Add Location Display
-						_location = new LocationDisplay(_context, location.getString("Title"), location.getString("Address"), location.getString("City"), location.getString("State"), location.getString("Phone"));
-						_thisLayout.addView(_location);
+						displayResults( _titleStr, _addressStr, _cityStr, _stateStr, _phoneStr);
+						
 					}else{
 						_toast = Toast.makeText(_context, "Something went wrong" , Toast.LENGTH_SHORT);
 						_toast.show();

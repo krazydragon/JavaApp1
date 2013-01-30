@@ -2,7 +2,22 @@
 <resources>
 
     <string name="app_name">Dessert Finder</string>
-    <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-
+    <string name="rButton1">Cookies</string>
+    <string name="rButton2">Pies</string>
+    <string name="rButton3">Cakes</string>
+    <string name="rButton4">Candy</string>
+    <string name="blankText"></string>
+    <string name="introText">Let\'s find a dessert close to you!</string>
+	<string name="zipcode_prompt">Choose a Zipcode</string>
+	<string name="input_button_text">Submit</string>
+    <string-array name="zipcode_arrays">
+        <item>98404</item>
+        <item>98101</item>
+        <item>10001</item>
+        <item>20056</item>
+        <item>30541</item>
+        <item>98446</item>
+        <item>98373</item>
+    </string-array>
 </resources>
