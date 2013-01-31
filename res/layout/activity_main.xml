@@ -2,37 +2,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="20dp"
     tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.41"
+        android:text="@string/introText"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <LinearLayout
         android:id="@+id/LinearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_marginTop="25dp"
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="@string/introText"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <Spinner
-            android:id="@+id/inputSpinner"
-            style="@style/AppTheme"
+            android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="0dp"
-            android:layout_marginTop="35dp"
-            android:entries="@array/zipcode_arrays"
-            android:prompt="@string/zipcode_prompt"
-            android:spinnerMode="dropdown" />
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="185dp"
+            android:orientation="vertical" >
+
+            <Spinner
+                android:id="@+id/inputSpinner"
+                style="@style/AppTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="35dp"
+                android:entries="@array/zipcode_arrays"
+                android:prompt="@string/zipcode_prompt"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="0dp"
+                android:src="@drawable/usa" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <LinearLayout
             android:id="@+id/linearLayout1"
-            android:layout_width="359dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
             <RadioGroup
@@ -72,9 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/cookies" />
-
         </LinearLayout>
-
     </LinearLayout>
 
     <GridLayout
