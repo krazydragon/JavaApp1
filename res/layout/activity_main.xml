@@ -22,7 +22,7 @@
         <Spinner
             android:id="@+id/inputSpinner"
             style="@style/AppTheme"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="0dp"
             android:layout_marginTop="35dp"
@@ -32,7 +32,7 @@
 
         <LinearLayout
             android:id="@+id/linearLayout1"
-            android:layout_width="wrap_content"
+            android:layout_width="359dp"
             android:layout_height="wrap_content" >
 
             <RadioGroup
@@ -69,8 +69,8 @@
 
             <ImageView
                 android:id="@+id/dessert_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:src="@drawable/cookies" />
 
         </LinearLayout>
@@ -178,8 +178,10 @@
         android:id="@+id/inputButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/LinearLayout1"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19dp"
         android:layout_weight="1"
         android:text="@string/input_button_text" />
 
