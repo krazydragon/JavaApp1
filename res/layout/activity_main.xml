@@ -6,26 +6,26 @@
     tools:context=".MainActivity" >
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/introView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.41"
-        android:text="@string/introText"
+        android:text="@string/intro_text"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <LinearLayout
-        android:id="@+id/LinearLayout1"
+        android:id="@+id/InputFormLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="25dp"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:visibility="visible" >
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Small Text"
+            android:text="@string/spinner_label"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <LinearLayout
@@ -45,11 +45,12 @@
                 android:spinnerMode="dropdown" />
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/mapView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="0dp"
-                android:src="@drawable/usa" />
+                android:src="@drawable/usa" 
+                android:contentDescription="@string/map_image_text"/>
 
         </LinearLayout>
 
@@ -58,17 +59,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:text="Small Text"
+            android:text="@string/radio_group_label"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <LinearLayout
             android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
 
             <RadioGroup
                 android:id="@+id/inputRadioGroup"
-                android:layout_width="170dp"
+                android:layout_width="144dp"
                 android:layout_height="136dp"
                 android:layout_marginLeft="0dp" >
 
@@ -102,17 +104,27 @@
                 android:id="@+id/dessert_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/cookies" />
+                android:src="@drawable/cookies"
+                android:contentDescription="@string/dessert_image_text"/>
+            	
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="61dp"
+        android:orientation="vertical" >
     </LinearLayout>
 
     <GridLayout
         android:id="@+id/resultGridLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginBottom="20dp"
+        android:layout_below="@+id/linearLayout2"
         android:alignmentMode="alignBounds"
         android:columnCount="2"
         android:orientation="horizontal"
@@ -124,27 +136,27 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
             android:layout_marginTop="49dp"
-            android:text="TextView" />
+            android:text="@string/title_label" />
 
         <TextView
             android:id="@+id/titleValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/blankText" />
-
-        <TextView
-            android:id="@+id/addressValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:text="TextView" />
+            android:text="@string/blank_text" />
 
         <TextView
             android:id="@+id/addressLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="TextView" />
+            android:text="@string/address_label" />
+
+        <TextView
+            android:id="@+id/addressValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="@string/blank_text" />
 
         <TextView
             android:id="@+id/cityLabel"
@@ -152,7 +164,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginTop="23dp"
-            android:text="TextView" />
+            android:text="@string/city_label" />
+
+        <TextView
+            android:id="@+id/cityValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/blank_text" />
 
         <TextView
             android:id="@+id/stateLabel"
@@ -160,14 +178,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginTop="18dp"
-            android:text="TextView" />
+            android:text="@string/state_label" />
 
         <TextView
             android:id="@+id/stateValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:text="TextView" />
+            android:text="@string/blank_text" />
 
         <TextView
             android:id="@+id/phoneLabel"
@@ -175,43 +193,23 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginTop="23dp"
-            android:text="TextView" />
+            android:text="@string/phone_label" />
 
         <TextView
             android:id="@+id/phoneValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/cityValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_gravity="left|center_vertical"
-            android:layout_row="1"
-            android:text="TextView" />
+            android:text="@string/blank_text" />
     </GridLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="32dp"
-        android:layout_marginTop="61dp"
-        android:orientation="vertical" >
-    </LinearLayout>
 
     <Button
         android:id="@+id/inputButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/LinearLayout1"
-        android:layout_marginTop="19dp"
-        android:layout_weight="1"
         android:text="@string/input_button_text" />
 
 </RelativeLayout>

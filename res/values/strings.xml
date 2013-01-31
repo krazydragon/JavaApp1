@@ -7,10 +7,20 @@
     <string name="rButton2">Pies</string>
     <string name="rButton3">Cakes</string>
     <string name="rButton4">Candy</string>
-    <string name="blankText"></string>
-    <string name="introText">Let\'s find a dessert close to you!</string>
+    <string name="blank_text">Place Holder</string>
+    <string name="intro_text">Let\'s find a dessert close to you!</string>
 	<string name="zipcode_prompt">Choose a Zipcode</string>
 	<string name="input_button_text">Submit</string>
+	<string name="input_button_text2">Back</string>
+	<string name="spinner_label">Pick a zipcode</string>
+	<string name="radio_group_label">Choose a dessert</string>
+	<string name="map_image_text">Map</string>
+	<string name="dessert_image_text">Dessert</string>
+	<string name="title_label">Title:</string>
+	<string name="address_label">Address:</string>
+	<string name="city_label">City:</string>
+	<string name="state_label">State:</string>
+	<string name="phone_label">Phone Number:</string>
     <string-array name="zipcode_arrays">
         <item>98404</item>
         <item>98101</item>

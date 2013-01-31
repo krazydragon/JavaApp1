@@ -22,7 +22,7 @@ import com.rbarnes.other.Dessert;
 
 
 
-import android.R.string;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
@@ -48,7 +48,6 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements OnClickListener {
 
 	Context _context;
-	LinearLayout _thisLayout;
 	Boolean _connected = false;
 	InputForm _input;
 	ArrayList<Dessert> _desserts;
@@ -63,17 +62,15 @@ public class MainActivity extends Activity implements OnClickListener {
 	String _stateStr;
 	String _phoneStr;
 	GridLayout _resultView;
+	LinearLayout _inputLayout;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_main);
+		 _inputLayout = (LinearLayout)findViewById(R.id.InputFormLayout);
 		_context = this;
-		_thisLayout = new LinearLayout(this);
-		LayoutParams lParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
-		_thisLayout.setLayoutParams(lParams); 
-		_thisLayout.setOrientation(LinearLayout.VERTICAL);
 		_input = new InputForm(_context, "Please enter zipcode", "Submit");
 		_resultView = (GridLayout)findViewById(R.id.resultGridLayout);
 		_oldLocation = getOldLocation();
@@ -92,7 +89,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		}else{
 			if(checkStorage()){
 				tmpToast = "Loading saved infomation no network connection found!";
-				displayResults( _titleStr, _addressStr, _cityStr, _stateStr, _phoneStr);
+				displayResults();
 			}else{
 				tmpToast = "No internet connection and no saved file found";
 			}
@@ -121,12 +118,21 @@ public class MainActivity extends Activity implements OnClickListener {
 		return true;
 	}
 	//Display results
-	private void displayResults(String title, String address, String city, String state, String phone){
+	private void displayResults(){
 		
 		
 		TextView tempTitle = (TextView)findViewById(R.id.titleValue);
+		TextView tempAddress = (TextView)findViewById(R.id.addressValue);
+		TextView tempCity = (TextView)findViewById(R.id.cityValue);
+		TextView tempState = (TextView)findViewById(R.id.stateValue);
+		TextView tempPhone = (TextView)findViewById(R.id.phoneValue);
 		tempTitle.setText(_titleStr);
+		tempAddress.setText(_addressStr);
+		tempCity.setText(_cityStr);
+		tempState.setText(_stateStr);
+		tempPhone.setText(_phoneStr);
 		_resultView.setVisibility(View.VISIBLE);
+		_inputLayout.setVisibility(View.INVISIBLE);
 		
 		
 	}
@@ -219,7 +225,7 @@ public class MainActivity extends Activity implements OnClickListener {
 						FileInterface.storeObjectFile(_context, "oldLocation", _oldLocation, false);
 						//Show data
 						//Add Location Display
-						displayResults( _titleStr, _addressStr, _cityStr, _stateStr, _phoneStr);
+						displayResults();
 						
 					}else{
 						_toast = Toast.makeText(_context, "Something went wrong" , Toast.LENGTH_SHORT);
