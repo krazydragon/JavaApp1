@@ -40,7 +40,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +62,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	String _phoneStr;
 	GridLayout _resultView;
 	LinearLayout _inputLayout;
+	Button _inputButton;
+	int _buttonId;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,10 +87,12 @@ public class MainActivity extends Activity implements OnClickListener {
 			}
 			_toast = Toast.makeText(_context, tmpToast, Toast.LENGTH_LONG);
 			_toast.show();
+			_buttonId = 0;
 		}else{
 			if(checkStorage()){
 				tmpToast = "Loading saved infomation no network connection found!";
 				displayResults();
+				_buttonId = 1;
 			}else{
 				tmpToast = "No internet connection and no saved file found";
 			}
@@ -98,7 +101,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		}
 		//Detect form elements
 	    _inputField = _input.getField();
-		Button inputButton = (Button)findViewById(R.id.inputButton);
+		_inputButton = (Button)findViewById(R.id.inputButton);
 		Button cookieButton = (Button)findViewById(R.id.cookieButton);
 		Button pieButton = (Button)findViewById(R.id.pieButton);
 		Button cakeButton = (Button)findViewById(R.id.cakeButton);
@@ -108,7 +111,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		pieButton.setOnClickListener(this);
 		cakeButton.setOnClickListener(this);
 		candyButton.setOnClickListener(this);
-		inputButton.setOnClickListener(this);
+		_inputButton.setOnClickListener(this);
 	}
 
 	@Override
@@ -131,9 +134,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		tempCity.setText(_cityStr);
 		tempState.setText(_stateStr);
 		tempPhone.setText(_phoneStr);
-		_resultView.setVisibility(View.VISIBLE);
-		_inputLayout.setVisibility(View.INVISIBLE);
-		
 		
 	}
 	//
@@ -245,14 +245,31 @@ public class MainActivity extends Activity implements OnClickListener {
 		RadioGroup inputGroup = (RadioGroup)findViewById(R.id.inputRadioGroup);
 		ImageView dessertView = (ImageView)findViewById(R.id.dessert_view);
 		switch(v.getId()){
+		//Submit Form
 		case R.id.inputButton:
-			int selectedButtonId = inputGroup.getCheckedRadioButtonId();
-			RadioButton selectedButton = (RadioButton) findViewById(selectedButtonId);
-			Spinner inputSpinner = (Spinner) findViewById(R.id.inputSpinner);
-			String buttonText = (String) selectedButton.getText();
-			String spinnerText = String.valueOf(inputSpinner.getSelectedItem());
+			switch(_buttonId){
+			case 0:
+				int selectedButtonId = inputGroup.getCheckedRadioButtonId();
+				RadioButton selectedButton = (RadioButton) findViewById(selectedButtonId);
+				Spinner inputSpinner = (Spinner) findViewById(R.id.inputSpinner);
+				String buttonText = (String) selectedButton.getText();
+				String spinnerText = String.valueOf(inputSpinner.getSelectedItem());
+				getLocations(buttonText,spinnerText);
+				_buttonId = 1;
+				_inputButton.setText(R.string.input_button_text2);
+				_resultView.setVisibility(View.VISIBLE);
+				_inputLayout.setVisibility(View.INVISIBLE);
+				break;
+			case 1:
+				_buttonId = 0;
+				_inputButton.setText(R.string.input_button_text);
+				_resultView.setVisibility(View.INVISIBLE);
+				_inputLayout.setVisibility(View.VISIBLE);
+				break;
+			}
 			
-			getLocations(buttonText,spinnerText);
+			
+		//Change image when button is pressed	
 		case R.id.cookieButton:
 			dessertView.setImageResource(R.drawable.cookies);
 			break;
@@ -265,6 +282,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		case R.id.candyButton:
 			dessertView.setImageResource(R.drawable.candy);
 			break;
+			
 		}
 	}
 
