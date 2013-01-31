@@ -33,6 +33,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -42,7 +44,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("ShowToast")
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnClickListener {
 
 	Context _context;
 	LinearLayout _thisLayout;
@@ -59,6 +61,7 @@ public class MainActivity extends Activity {
 	String _cityStr;
 	String _stateStr;
 	String _phoneStr;
+	GridLayout _resultView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,7 @@ public class MainActivity extends Activity {
 		_thisLayout.setOrientation(LinearLayout.VERTICAL);
 		_input = new InputForm(_context, "Please enter zipcode", "Submit");
 		_oldLocation = getOldLocation();
+		
 		//Look for old file
 		if(_oldLocation != null){
 			_toast = Toast.makeText(_context, "No network conntection last search is loaded.", Toast.LENGTH_LONG);
@@ -92,45 +96,19 @@ public class MainActivity extends Activity {
 			_toast.show();
 		}
 		
-		
-	    
-		
 		//Detect form elements
 	    _inputField = _input.getField();
 		Button inputButton = (Button)findViewById(R.id.inputButton);
-		
+		Button cookieButton = (Button)findViewById(R.id.cookieButton);
+		Button pieButton = (Button)findViewById(R.id.pieButton);
+		Button cakeButton = (Button)findViewById(R.id.cakeButton);
+		Button candyButton = (Button)findViewById(R.id.candyButton);
 		//Detect button click
-		inputButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-				//Check network connection
-				_connected = WebInterface.getConnectionStatus(_context);
-				RadioGroup inputGroup = (RadioGroup)findViewById(R.id.inputRadioGroup);
-				if(_connected){
-					Log.i("NETWORK CONNECTION", WebInterface.getConnectionType(_context));
-					int selectedButtonId = inputGroup.getCheckedRadioButtonId();
-					RadioButton selectedButton = (RadioButton) findViewById(selectedButtonId);
-					Spinner inputSpinner = (Spinner) findViewById(R.id.inputSpinner);
-					String buttonText = (String) selectedButton.getText();
-					String spinnerText = String.valueOf(inputSpinner.getSelectedItem());
-					
-					getLocations(buttonText,spinnerText);
-				}else{
-					//Show data
-					//Add Location Display
-					_location = new LocationDisplay(_context, _titleStr, _addressStr, _cityStr, _stateStr, _phoneStr);
-					_thisLayout.addView(_location);
-					_toast.show();
-				}
-				
-				
-				
-				
-				
-			}
-		});
+		cookieButton.setOnClickListener(this);
+		pieButton.setOnClickListener(this);
+		cakeButton.setOnClickListener(this);
+		candyButton.setOnClickListener(this);
+		inputButton.setOnClickListener(this);
 	}
 
 	@Override
@@ -145,6 +123,7 @@ public class MainActivity extends Activity {
 		
 		TextView tempTitle = (TextView)findViewById(R.id.titleValue);
 		tempTitle.setText(_titleStr);
+		_resultView.setVisibility(View.VISIBLE);
 		
 		
 	}
@@ -231,6 +210,53 @@ public class MainActivity extends Activity {
 			}
 			
 		}
+	}
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		RadioGroup inputGroup = (RadioGroup)findViewById(R.id.inputRadioGroup);
+		ImageView dessertView = (ImageView)findViewById(R.id.dessert_view);
+		switch(v.getId()){
+		case R.id.inputButton:
+			int selectedButtonId = inputGroup.getCheckedRadioButtonId();
+			RadioButton selectedButton = (RadioButton) findViewById(selectedButtonId);
+			Spinner inputSpinner = (Spinner) findViewById(R.id.inputSpinner);
+			String buttonText = (String) selectedButton.getText();
+			String spinnerText = String.valueOf(inputSpinner.getSelectedItem());
+			
+			getLocations(buttonText,spinnerText);
+		case R.id.cookieButton:
+			dessertView.setImageResource(R.drawable.cookies);
+			break;
+		case R.id.pieButton:
+			dessertView.setImageResource(R.drawable.pies);
+			break;
+		case R.id.cakeButton:
+			dessertView.setImageResource(R.drawable.cakes);
+			break;
+		case R.id.candyButton:
+			dessertView.setImageResource(R.drawable.candy);
+			break;
+		}
+		/*Check network connection
+		_connected = WebInterface.getConnectionStatus(_context);
+		RadioGroup inputGroup = (RadioGroup)findViewById(R.id.inputRadioGroup);
+		if(_connected){
+			Log.i("NETWORK CONNECTION", WebInterface.getConnectionType(_context));
+			int selectedButtonId = inputGroup.getCheckedRadioButtonId();
+			RadioButton selectedButton = (RadioButton) findViewById(selectedButtonId);
+			Spinner inputSpinner = (Spinner) findViewById(R.id.inputSpinner);
+			String buttonText = (String) selectedButton.getText();
+			String spinnerText = String.valueOf(inputSpinner.getSelectedItem());
+			
+			getLocations(buttonText,spinnerText);
+		}else{
+			//Show data
+			//Add Location Display
+			_location = new LocationDisplay(_context, _titleStr, _addressStr, _cityStr, _stateStr, _phoneStr);
+			_thisLayout.addView(_location);
+			_toast.show();
+		}*/
 	}
 
 }
