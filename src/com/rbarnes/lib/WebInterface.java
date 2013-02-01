@@ -1,7 +1,7 @@
-//Ronaldo Barnes
-//Java 1 week 3
-//January 2013
-//Full Sail University
+//Ronaldo Barnes       
+//Java 1 week 4        
+//January 2013         
+//Full Sail University 
 
 package com.rbarnes.lib;
 
