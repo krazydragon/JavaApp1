@@ -1,5 +1,5 @@
 //Ronaldo Barnes
-//Java 1 week 3
+//Java 1 week 4
 //January 2013
 //Full Sail University
 package com.barnes.ronaldo.javaapp1;
@@ -64,6 +64,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	LinearLayout _inputLayout;
 	Button _inputButton;
 	int _buttonId;
+	TextView _introText;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +76,13 @@ public class MainActivity extends Activity implements OnClickListener {
 		_input = new InputForm(_context, "Please enter zipcode", "Submit");
 		_resultView = (GridLayout)findViewById(R.id.resultGridLayout);
 		_oldLocation = getOldLocation();
+		_inputButton = (Button)findViewById(R.id.inputButton);
+		_introText =(TextView)findViewById(R.id.introView);
 		_connected = WebInterface.getConnectionStatus(_context);
 		//Check network connection and local storage
 		String tmpToast;
 		if(_connected){
-			
+			//show user connected message
 			if(checkStorage()){
 				tmpToast = (String)WebInterface.getConnectionType(_context) + " is connected and saved file was found!";
 			}else{
@@ -90,11 +93,24 @@ public class MainActivity extends Activity implements OnClickListener {
 			_buttonId = 0;
 		}else{
 			if(checkStorage()){
+				//show old information
 				tmpToast = "Loading saved infomation no network connection found!";
 				displayResults();
-				_buttonId = 1;
+				_introText.setText(R.string.old_text);
+				_inputButton.setText(R.string.input_button_text3);
+				_resultView.setVisibility(View.VISIBLE);
+				_inputLayout.setVisibility(View.INVISIBLE);
+				_buttonId = 2;
 			}else{
+				//Show no information tell user to exit application
+				LinearLayout noNetwork = (LinearLayout)findViewById(R.id.nothingView);
+				_buttonId = 2;
 				tmpToast = "No internet connection and no saved file found";
+				_introText.setText(R.string.no_conn_text);
+				_inputButton.setText(R.string.input_button_text3);
+				_introText.setText(R.string.no_conn_text);
+				_inputLayout.setVisibility(View.INVISIBLE);
+				noNetwork.setVisibility(View.VISIBLE);
 			}
 			_toast = Toast.makeText(_context, tmpToast, Toast.LENGTH_LONG);
 			_toast.show();
@@ -138,6 +154,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	}
 	//
 	private Boolean checkStorage(){
+		//set old information
 		if(_oldLocation != null){
 			_titleStr = _oldLocation.get("Title").toString();
 			_addressStr = _oldLocation.get("Address").toString();
@@ -146,6 +163,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			_phoneStr = _oldLocation.get("Phone").toString();
 			return true;
 		}else{
+			//get ready to save new information
 			_oldLocation = new HashMap<String, String>();
 			_titleStr = "";
 			_addressStr = "";
@@ -226,7 +244,8 @@ public class MainActivity extends Activity implements OnClickListener {
 						//Show data
 						//Add Location Display
 						displayResults();
-						
+						_resultView.setVisibility(View.VISIBLE);
+						_inputLayout.setVisibility(View.INVISIBLE);
 					}else{
 						_toast = Toast.makeText(_context, "Something went wrong" , Toast.LENGTH_SHORT);
 						_toast.show();
@@ -249,6 +268,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		case R.id.inputButton:
 			switch(_buttonId){
 			case 0:
+				//show results
 				int selectedButtonId = inputGroup.getCheckedRadioButtonId();
 				RadioButton selectedButton = (RadioButton) findViewById(selectedButtonId);
 				Spinner inputSpinner = (Spinner) findViewById(R.id.inputSpinner);
@@ -257,16 +277,23 @@ public class MainActivity extends Activity implements OnClickListener {
 				getLocations(buttonText,spinnerText);
 				_buttonId = 1;
 				_inputButton.setText(R.string.input_button_text2);
-				_resultView.setVisibility(View.VISIBLE);
-				_inputLayout.setVisibility(View.INVISIBLE);
 				break;
 			case 1:
+				//go back to input view
 				_buttonId = 0;
 				_inputButton.setText(R.string.input_button_text);
+				_introText.setText(R.string.intro_text);
 				_resultView.setVisibility(View.INVISIBLE);
 				_inputLayout.setVisibility(View.VISIBLE);
+				
+				break;
+			case 2:
+				//close application
+				System.exit(0);
+				
 				break;
 			}
+			
 			
 			
 		//Change image when button is pressed	

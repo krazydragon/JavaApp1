@@ -19,7 +19,8 @@ public final class R {
         public static final int cookies=0x7f020002;
         public static final int ic_launcher=0x7f020003;
         public static final int pies=0x7f020004;
-        public static final int usa=0x7f020005;
+        public static final int sad=0x7f020005;
+        public static final int usa=0x7f020006;
     }
     public static final class id {
         public static final int InputFormLayout=0x7f080001;
@@ -31,14 +32,17 @@ public final class R {
         public static final int cityValue=0x7f080014;
         public static final int cookieButton=0x7f080008;
         public static final int dessert_view=0x7f08000c;
+        public static final int imageView1=0x7f08001c;
         public static final int inputButton=0x7f080019;
         public static final int inputRadioGroup=0x7f080007;
         public static final int inputSpinner=0x7f080003;
         public static final int introView=0x7f080000;
         public static final int linearLayout1=0x7f080006;
         public static final int linearLayout2=0x7f08000d;
+        public static final int linearLayout3=0x7f08001b;
         public static final int mapView=0x7f080004;
-        public static final int menu_settings=0x7f08001a;
+        public static final int menu_settings=0x7f08001d;
+        public static final int nothingView=0x7f08001a;
         public static final int phoneLabel=0x7f080017;
         public static final int phoneValue=0x7f080018;
         public static final int pieButton=0x7f080009;
@@ -57,26 +61,30 @@ public final class R {
         public static final int activity_main=0x7f070000;
     }
     public static final class string {
-        public static final int address_label=0x7f040010;
+        public static final int address_label=0x7f040014;
         public static final int app_name=0x7f040000;
         public static final int blank_text=0x7f040006;
-        public static final int city_label=0x7f040011;
-        public static final int dessert_image_text=0x7f04000e;
-        public static final int input_button_text=0x7f040009;
-        public static final int input_button_text2=0x7f04000a;
+        public static final int city_label=0x7f040015;
+        public static final int dessert_image_text=0x7f040012;
+        public static final int input_button_text=0x7f04000c;
+        public static final int input_button_text2=0x7f04000d;
+        public static final int input_button_text3=0x7f04000e;
         public static final int intro_text=0x7f040007;
-        public static final int map_image_text=0x7f04000d;
+        public static final int map_image_text=0x7f040011;
         public static final int menu_settings=0x7f040001;
-        public static final int phone_label=0x7f040013;
+        public static final int no_conn_text=0x7f04000a;
+        public static final int old_text=0x7f040009;
+        public static final int phone_label=0x7f040017;
         public static final int rButton1=0x7f040002;
         public static final int rButton2=0x7f040003;
         public static final int rButton3=0x7f040004;
         public static final int rButton4=0x7f040005;
-        public static final int radio_group_label=0x7f04000c;
-        public static final int spinner_label=0x7f04000b;
-        public static final int state_label=0x7f040012;
-        public static final int title_label=0x7f04000f;
-        public static final int zipcode_prompt=0x7f040008;
+        public static final int radio_group_label=0x7f040010;
+        public static final int result_text=0x7f040008;
+        public static final int spinner_label=0x7f04000f;
+        public static final int state_label=0x7f040016;
+        public static final int title_label=0x7f040013;
+        public static final int zipcode_prompt=0x7f04000b;
     }
     public static final class style {
         /** 
@@ -105,6 +113,6 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f060001;
-        public static final int Theme_Default=0x7f060002;
+        public static final int DessertTheme=0x7f060002;
     }
 }

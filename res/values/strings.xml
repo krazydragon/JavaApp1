@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
 
     <string name="app_name">Dessert Finder</string>
@@ -9,9 +10,13 @@
     <string name="rButton4">Candy</string>
     <string name="blank_text">Place Holder</string>
     <string name="intro_text">Let\'s find a dessert close to you!</string>
+    <string name="result_text">Here is what we found!</string>
+    <string name="old_text">No network! This is your last search</string>
+    <string name="no_conn_text">No network or old files found pleae close app!</string>
 	<string name="zipcode_prompt">Choose a Zipcode</string>
 	<string name="input_button_text">Submit</string>
 	<string name="input_button_text2">Back</string>
+	<string name="input_button_text3">Exit</string>
 	<string name="spinner_label">Pick a zipcode</string>
 	<string name="radio_group_label">Choose a dessert</string>
 	<string name="map_image_text">Map</string>

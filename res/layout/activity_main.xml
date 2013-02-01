@@ -1,3 +1,4 @@
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,15 +10,16 @@
         android:id="@+id/introView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="@string/intro_text"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <LinearLayout
         android:id="@+id/InputFormLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="35dp"
         android:orientation="vertical"
         android:visibility="visible" >
 
@@ -49,9 +51,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="0dp"
-                android:src="@drawable/usa" 
-                android:contentDescription="@string/map_image_text"/>
-
+                android:contentDescription="@string/map_image_text"
+                android:src="@drawable/usa" />
         </LinearLayout>
 
         <TextView
@@ -104,9 +105,8 @@
                 android:id="@+id/dessert_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/cookies"
-                android:contentDescription="@string/dessert_image_text"/>
-            	
+                android:contentDescription="@string/dessert_image_text"
+                android:src="@drawable/cookies" />
         </LinearLayout>
     </LinearLayout>
 
@@ -211,5 +211,22 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:text="@string/input_button_text" />
+
+    <LinearLayout
+        android:id="@+id/nothingView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/linearLayout3"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="127dp"
+            android:src="@drawable/sad" />
+    </LinearLayout>
 
 </RelativeLayout>
